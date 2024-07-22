@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+</head>
+<body>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .clock {
+            width: 100vw;
+            height: 100vw;
+            background-color: rgb(32, 32, 32);
+            border-radius: 10%;
+            overflow: hidden;
+        }  
+
+        @media screen and (orientation: landscape) {
+            .clock {
+                width: 100vh;
+                height: 100vh;
+            }
+            
+        }
+
+        .clock-face {
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: rgb(43, 43, 43);
+        }
+
+        .middle-point {
+            width: 6.5%;
+            height: 6.5%;
+            border-radius: 100%;
+            border: 3vw solid rgb(207, 207, 207);
+            position: absolute;
+            z-index: 3;
+            background-color: rgb(43, 43, 43);
+        }
+        
+        @media screen and (orientation: landscape) {
+            .middle-point {
+                border: 3vh solid rgb(207, 207, 207);
+            }
+        }
+
+        .second-middle-point {
+            width: 5%;
+            height: 5%;
+            border-radius: 100%;
+            border: 1vw solid rgb(180, 131, 39);
+            position: absolute;
+            z-index: 5;
+            background-color: rgb(43, 43, 43);
+        }
+        
+        @media screen and (orientation: landscape) {
+            .second-middle-point {
+                border: 1vh solid rgb(180, 131, 39);
+            }
+        }
+
+        .hand {
+            position: absolute;
+            transform-origin: 50% 100%;
+        }
+
+        .hour-hand {
+            height: 30%;
+            width: 4%;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            z-index: 1;
+            background-color: rgb(207, 207, 207);
+        }
+
+        .minute-hand {
+            height: 40%;
+            width: 3%;
+            border-radius: 20%;
+            transform: translateY(-50%) rotate(180deg);
+            z-index: 2;
+            background-color: rgb(207, 207, 207);
+        }
+
+        .second-hand {
+            height: 45%;
+            width: 1%;
+            border-radius: 20%;
+            transform: translateY(-50%) rotate(-90deg);
+            z-index: 4;
+            background-color: rgb(180, 131, 39);
+            transform-origin: 50% 100%;
+        }
+    </style>
+    <div class="clock">
+        <div class="clock-face">
+            <div class="middle-point"></div>
+            <div class="second-middle-point"></div>
+            <div class="hand hour-hand"></div>
+            <div class="hand minute-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+    </div>
+</body>
+</html>
