@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clock</title>
 </head>
+
 <body>
     <style>
         :root {
@@ -23,6 +25,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .clock {
             width: calc(var(--size) * 100);
             height: calc(var(--size) * 100);
@@ -70,13 +73,13 @@
             position: absolute;
             transform-origin: 50% 100%;
             border-radius: calc(var(--size) * 1.5);
-            transition: transform 0.5s;
+            transition: transform 1s;
         }
 
         .hour-hand {
             height: 30%;
             width: 4%;
-            transform: translateY(-50%) rotate(90deg);
+            transform: translateY(-50%) rotate(calc(300deg));
             z-index: 1;
             background-color: rgb(207, 207, 207);
         }
@@ -84,7 +87,7 @@
         .minute-hand {
             height: 45%;
             width: 3%;
-            transform: translateY(-50%) rotate(180deg);
+            transform: translateY(-50%) rotate(60deg);
             z-index: 2;
             background-color: rgb(207, 207, 207);
         }
@@ -92,7 +95,7 @@
         .second-hand {
             height: 60%;
             width: 1%;
-            transform: translateY(-30%) rotate(120deg);
+            transform: translateY(-30%) rotate(0deg);
             z-index: 4;
             background-color: rgb(180, 131, 39);
             transform-origin: 50% 80%;
@@ -165,11 +168,12 @@
 
         .hour-marker:nth-child(12) {
             height: 7%;
-            transform:  rotate(0deg) translateY(calc(var(--size) * -39));
+            transform: rotate(0deg) translateY(calc(var(--size) * -39));
         }
     </style>
     <div class="clock">
         <div class="clock-face">
+            <div class="digital-clock"></div>
             <div class="middle-point"></div>
             <div class="second-middle-point"></div>
             <div class="hour-markers">
@@ -191,5 +195,67 @@
             <div class="hand second-hand"></div>
         </div>
     </div>
+    <script>
+        const hourHand = document.querySelector('.hour-hand');
+        const minuteHand = document.querySelector('.minute-hand');
+        const secondHand = document.querySelector('.second-hand');
+
+        const digitalClock = document.querySelector('.digital-clock');
+
+        if (!hourHand || !minuteHand || !secondHand) {
+            throw new Error('One of the hands is missing');
+        }
+
+        const settings = {
+            smoothSeconds: true,
+            showDigital: true
+        };
+
+        if (!settings.showDigital) {
+            digitalClock.style.display = 'none';
+        }
+
+        setInterval(() => {
+
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hoursDegrees = (hours * 30) + (0.5 * minutes);
+            const minutesDegrees = (minutes * 6) + (0.1 * seconds);
+            const secondsDegrees = seconds * 6;
+
+            
+            hourHand.style.transition = 'transform 1s';
+            minuteHand.style.transition = 'transform 1s';
+            secondHand.style.transition = 'transform ' + (settings.smoothSeconds ? '1s linear' : '0.5s');
+
+            hourHand.style.transform = `translateY(-50%) rotate(${hoursDegrees === 0 ? 360 : hoursDegrees}deg)`
+            minuteHand.style.transform = `translateY(-50%) rotate(${minutesDegrees === 0 ? 360 : minutesDegrees}deg)`;
+            secondHand.style.transform = `translateY(-30%) rotate(${secondsDegrees === 0 ? 360 : secondsDegrees}deg)`;
+
+            if (secondsDegrees === 0) {
+                setTimeout(() => {
+                    secondHand.style.transition = 'none';
+                    secondHand.style.transform = `translateY(-30%) rotate(${secondsDegrees}deg)`;
+                }, settings.smoothSeconds ? 980 : 500);
+            }
+            if (minutesDegrees === 0) {
+                setTimeout(() => {
+                    minuteHand.style.transition = 'none';
+                    minuteHand.style.transform = `translateY(-50%) rotate(${minutesDegrees}deg)`;
+                }, 500);
+            }
+            if (hoursDegrees === 0) {
+                setTimeout(() => {
+                    hourHand.style.transition = 'none';
+                    hourHand.style.transform = `translateY(-50%) rotate(${hoursDegrees}deg)`;
+                }, 500);
+            }
+
+        }, 1000);
+    </script>
 </body>
+
 </html>
