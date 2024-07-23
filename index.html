@@ -15,7 +15,17 @@
         }
 
         :root {
-            --size: 1vw
+            --size: 1vw;
+
+            --background-color: rgb(17, 19, 32);
+            --clock-face-color: rgb(22, 25, 51);
+            --hand-color: rgb(207, 207, 207);
+            --second-hand-color: rgb(180, 131, 39);
+
+            --hour-marker-color: rgba(207, 207, 207, 0.658);
+
+            --digital-clock-color: rgba(194, 208, 255, 0.8);
+            --digital-clock-background-color: rgba(34, 52, 87, 0.6);
         }
 
         @media screen and (orientation: landscape) {
@@ -27,14 +37,21 @@
         body {
             margin: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw;
+            height: 100vw;
+        }
+
+        @media screen and (orientation: landscape) {
+            body {
+                width: 100vh;
+                height: 100vh;
+            }
         }
 
         .clock {
             width: calc(var(--size) * 100);
             height: calc(var(--size) * 100);
-            background-color: rgb(32, 32, 32);
+            background-color: var(--background-color);
             border-radius: 10%;
             overflow: hidden;
             z-index: 0;
@@ -50,7 +67,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            background-color: rgb(43, 43, 43);
+            background-color: var(--clock-face-color);
             z-index: 0;
         }
 
@@ -58,7 +75,7 @@
             width: 6.5%;
             height: 6.5%;
             border-radius: 100%;
-            border: calc(var(--size) * 3) solid rgb(207, 207, 207);
+            border: calc(var(--size) * 3) solid var(--hand-color);
             position: absolute;
             z-index: 5;
             background-color: rgb(43, 43, 43);
@@ -68,10 +85,10 @@
             width: 5%;
             height: 5%;
             border-radius: 100%;
-            border: var(--size) solid rgb(180, 131, 39);
+            border: var(--size) solid var(--second-hand-color);
             position: absolute;
             z-index: 9;
-            background-color: rgb(43, 43, 43);
+            background-color: var(--background-color);
         }
 
         .hand {
@@ -86,7 +103,7 @@
             width: 4%;
             transform: translateY(-50%) rotate(calc(300deg));
             z-index: 2;
-            background-color: rgb(207, 207, 207);
+            background-color: var(--hand-color);
         }
 
         .minute-hand {
@@ -94,7 +111,7 @@
             width: 3%;
             transform: translateY(-50%) rotate(60deg);
             z-index: 4;
-            background-color: rgb(207, 207, 207);
+            background-color: var(--hand-color);
         }
 
         .second-hand {
@@ -102,7 +119,7 @@
             width: 1%;
             transform: translateY(-30%) rotate(0deg);
             z-index: 8;
-            background-color: rgb(180, 131, 39);
+            background-color: var(--second-hand-color);
             transform-origin: 50% 80%;
         }
 
@@ -118,7 +135,7 @@
         .hour-marker {
             width: 2%;
             height: 5%;
-            background-color: rgba(207, 207, 207, 0.658);
+            background-color: var(--hour-marker-color);
             position: absolute;
             border-radius: var(--size);
             z-index: 1;
@@ -182,10 +199,10 @@
             position: absolute;
             font-size: calc(var(--size) * 8.5);
             text-align: center;
-            color: rgba(207, 207, 207, 0.8);
+            color: var(--digital-clock-color);
             z-index: 1;
             border-radius: calc(var(--size) * 1.5);
-            background-color: rgba(94, 94, 94, 0.6);
+            background-color: var(--digital-clock-background-color);
             backdrop-filter: blur(var(--size));
             width: 32%;
             height: 10%;
@@ -194,7 +211,7 @@
             font-family: 'Technology', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
 
-        .digital-clock > div {
+        .digital-clock>div {
             overflow: hidden;
             display: flex;
             flex-direction: row;
@@ -204,7 +221,7 @@
             position: relative;
         }
 
-        .digital-clock > div > span {
+        .digital-clock>div>span {
             transition: transform 1s;
             display: inline-block;
             width: calc(var(--size) * 4);
@@ -216,7 +233,10 @@
     <div class="clock">
         <div class="clock-face">
             <div class="digital-clock">
-                <div id="hours"><span id="hours-1">0 1 2 3 4 5 6 7 8 9</span><span id="hours-2">0 1 2 3 4 5 6 7 8 9</span></div>:<div id="minutes"><span id="minutes-1">0 1 2 3 4 5 6 7 8 9</span><span id="minutes-2">0 1 2 3 4 5 6 7 8 9</span></div>:<div id="seconds"><span id="seconds-1">0 1 2 3 4 5 6 7 8 9</span><span id="seconds-2">0 1 2 3 4 5 6 7 8 9</span></div>
+                <div id="hours"><span id="hours-1">0 1 2 3 4 5 6 7 8 9</span><span id="hours-2">0 1 2 3 4 5 6 7 8
+                        9</span></div>:<div id="minutes"><span id="minutes-1">0 1 2 3 4 5 6 7 8 9</span><span
+                        id="minutes-2">0 1 2 3 4 5 6 7 8 9</span></div>:<div id="seconds"><span id="seconds-1">0 1 2 3 4
+                        5 6 7 8 9</span><span id="seconds-2">0 1 2 3 4 5 6 7 8 9</span></div>
             </div>
             <div class="middle-point"></div>
             <div class="second-middle-point"></div>
@@ -239,7 +259,109 @@
             <div class="hand second-hand"></div>
         </div>
     </div>
-    <script>
+    <script id="colorschemes">
+        const colorShemes = (scheme) => {
+            switch (scheme) {
+                default:
+                case "dark": return {
+                    backgroundColor: 'rgb(32, 32, 32)',
+                    clockFaceColor: 'rgb(43, 43, 43)',
+                    handColor: 'rgb(207, 207, 207)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(207, 207, 207, 0.658)',
+                    digitalClockColor: 'rgba(207, 207, 207, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(94, 94, 94, 0.6)'
+                }
+                case "light": return {
+                    backgroundColor: 'rgb(245, 245, 245)',
+                    clockFaceColor: 'rgb(240, 240, 240)',
+                    handColor: 'rgb(43, 43, 43)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(43, 43, 43, 0.658)',
+                    digitalClockColor: 'rgba(43, 43, 43, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(240, 240, 240, 0.6)'
+                }
+                case "blue": return {
+                    backgroundColor: 'rgb(17, 19, 32)',
+                    clockFaceColor: 'rgb(22, 25, 51)',
+                    handColor: 'rgb(207, 207, 207)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(207, 207, 207, 0.658)',
+                    digitalClockColor: 'rgba(194, 208, 255, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(34, 52, 87, 0.6)'
+                }
+            }
+        }
+    </script>
+    <script id="settings">
+
+        const settings = {
+            smoothSeconds: true,
+            showDigital: true,
+            animateDigital: true,
+            digitalOnTop: true,
+            colors: {
+                preset: undefined,
+                custom: {
+                    ...colorShemes()
+                }
+            }
+        };
+
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const pairs = queryString.split("&");
+            pairs.forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+            console.log(params);
+            return params;
+        }
+
+        const params = getQueryParams();
+
+        if (params.smoothSeconds) {
+            settings.smoothSeconds = params.smoothSeconds === 'true';
+        }
+        if (params.showDigital) {
+            settings.showDigital = params.showDigital === 'true';
+        }
+        if (params.animateDigital) {
+            settings.animateDigital = params.animateDigital === 'true';
+        }
+        if (params.digitalOnTop) {
+            settings.digitalOnTop = params.digitalOnTop === 'true';
+        }
+        if (params.colorPreset) {
+            settings.colors.preset = params.colorPreset;
+        }
+        if (params.customColors_backgroundColor) {
+            settings.colors.custom.backgroundColor = params.customColors_backgroundColor;
+        }
+        if (params.customColors_clockFaceColor) {
+            settings.colors.custom.clockFaceColor = params.customColors_clockFaceColor;
+        }
+        if (params.customColors_handColor) {
+            settings.colors.custom.handColor = params.customColors_handColor;
+        }
+        if (params.customColors_secondHandColor) {
+            settings.colors.custom.secondHandColor = params.customColors_secondHandColor;
+        }
+        if (params.customColors_hourMarkerColor) {
+            settings.colors.custom.hourMarkerColor = params.customColors_hourMarkerColor;
+        }
+        if (params.customColors_digitalClockColor) {
+            settings.colors.custom.digitalClockColor = params.customColors_digitalClockColor;
+        }
+        if (params.customColors_digitalClockBackgroundColor) {
+            settings.colors.custom.digitalClockBackgroundColor = params.customColors_digitalClockBackgroundColor;
+        }
+        console.log(settings);
+
+    </script>
+    <script id="main">
         const hourHand = document.querySelector('.hour-hand');
         const minuteHand = document.querySelector('.minute-hand');
         const secondHand = document.querySelector('.second-hand');
@@ -267,22 +389,19 @@
             throw new Error('One of the hands is missing');
         }
 
-        const settings = {
-            smoothSeconds: true,
-            showDigital: true,
-            animateDigital: true,
-            digitalOnTop: true
-        };
+        if (settings.colors.preset) {
+            settings.colors.custom = { enabeld: false, ...colorShemes(settings.colors.preset) };
+        }
 
         if (!settings.showDigital) {
             digitalClock.clock.style.display = 'none';
-        } else if(!settings.animateDigital) {
+        } else if (!settings.animateDigital) {
             const spans = document.querySelectorAll('.digital-clock span');
             spans.forEach(span => {
                 span.style.transition = 'none';
             });
         }
-        if(settings.digitalOnTop) {
+        if (settings.digitalOnTop) {
             digitalClock.clock.style.zIndex = 10;
         }
 
@@ -297,7 +416,7 @@
             const minutesDegrees = (minutes * 6) + (0.1 * seconds);
             const secondsDegrees = seconds * 6;
 
-            
+
             hourHand.style.transition = 'transform 1s';
             minuteHand.style.transition = 'transform 1s';
             secondHand.style.transition = 'transform ' + (settings.smoothSeconds ? '1s linear' : '0.5s');
@@ -325,7 +444,7 @@
                 }, 500);
             }
 
-            if(settings.showDigital) {
+            if (settings.showDigital) {
                 setSpanNumber(digitalClock.hours.first, Math.floor(hours / 10));
                 setSpanNumber(digitalClock.hours.second, hours % 10);
                 setSpanNumber(digitalClock.minutes.first, Math.floor(minutes / 10));
@@ -339,6 +458,15 @@
         function setSpanNumber(span, num) {
             span.style.transform = `translateY(-${num * 10}%)`;
         }
+    </script>
+    <script id="color-applyer">
+        document.documentElement.style.setProperty('--background-color', settings.colors.custom.backgroundColor);
+        document.documentElement.style.setProperty('--clock-face-color', settings.colors.custom.clockFaceColor);
+        document.documentElement.style.setProperty('--hand-color', settings.colors.custom.handColor);
+        document.documentElement.style.setProperty('--second-hand-color', settings.colors.custom.secondHandColor);
+        document.documentElement.style.setProperty('--hour-marker-color', settings.colors.custom.hourMarkerColor);
+        document.documentElement.style.setProperty('--digital-clock-color', settings.colors.custom.digitalClockColor);
+        document.documentElement.style.setProperty('--digital-clock-background-color', settings.colors.custom.digitalClockBackgroundColor);
     </script>
 </body>
 
