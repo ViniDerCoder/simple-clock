@@ -47,7 +47,7 @@ You can customize the clock by adding URL parameters. Here are some examples:
 ### Example URL
 
 ```
-https://vinidercoder.github.io/simple-clock/?animateDigital=true&digitalOnTop=false&colorPreset=dark&customColors_backgroundColor=%23ffffff&customColors_clockFaceColor=%23000000&customColors_handColor=%23ff0000&customColors_secondHandColor=%2300ff00&customColors_hourMarkerColor=%230000ff&customColors_digitalClockColor=%23ffff00&customColors_digitalClockBackgroundColor=%2300ffff
+https://vinidercoder.github.io/simple-clock/?animateDigital=true&digitalOnTop=false&customColors_backgroundColor=%23ffffff&customColors_clockFaceColor=%23000000&customColors_handColor=%23ff0000&customColors_secondHandColor=%2300ff00&customColors_hourMarkerColor=%230000ff&customColors_digitalClockColor=%23ffff00&customColors_digitalClockBackgroundColor=%2300ffff
 ```
 
 ## License
