@@ -9,6 +9,11 @@
 
 <body>
     <style>
+        @font-face {
+            font-family: 'Technology';
+            src: url('./assets/fonts/Technology.ttf');
+        }
+
         :root {
             --size: 1vw
         }
@@ -55,7 +60,7 @@
             border-radius: 100%;
             border: calc(var(--size) * 3) solid rgb(207, 207, 207);
             position: absolute;
-            z-index: 3;
+            z-index: 5;
             background-color: rgb(43, 43, 43);
         }
 
@@ -65,7 +70,7 @@
             border-radius: 100%;
             border: var(--size) solid rgb(180, 131, 39);
             position: absolute;
-            z-index: 5;
+            z-index: 9;
             background-color: rgb(43, 43, 43);
         }
 
@@ -80,7 +85,7 @@
             height: 30%;
             width: 4%;
             transform: translateY(-50%) rotate(calc(300deg));
-            z-index: 1;
+            z-index: 2;
             background-color: rgb(207, 207, 207);
         }
 
@@ -88,7 +93,7 @@
             height: 45%;
             width: 3%;
             transform: translateY(-50%) rotate(60deg);
-            z-index: 2;
+            z-index: 4;
             background-color: rgb(207, 207, 207);
         }
 
@@ -96,7 +101,7 @@
             height: 60%;
             width: 1%;
             transform: translateY(-30%) rotate(0deg);
-            z-index: 4;
+            z-index: 8;
             background-color: rgb(180, 131, 39);
             transform-origin: 50% 80%;
         }
@@ -170,10 +175,32 @@
             height: 7%;
             transform: rotate(0deg) translateY(calc(var(--size) * -39));
         }
+
+        .digital-clock {
+            position: absolute;
+            font-size: calc(var(--size) * 8.5);
+            text-align: center;
+            color: rgb(207, 207, 207);
+            z-index: 1;
+            border-radius: calc(var(--size) * 1.5);
+            background-color: rgb(94, 94, 94);
+            width: 32%;
+            height: 10%;
+            padding: 1.5%;
+            transform: translateY(calc(var(--size) * -18));
+            font-family: 'Technology', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        .digital-clock > div {
+            display: inline-block;
+            margin: 0 1%;
+        }
     </style>
     <div class="clock">
         <div class="clock-face">
-            <div class="digital-clock"></div>
+            <div class="digital-clock">
+                <div id="hours"><span id="hours-1">0</span><span id="hours-2">0</span></div>:<div id="minutes"><span id="minutes-1">0</span><span id="minutes-2">0</span></div>:<div id="seconds"><span id="seconds-1">0</span><span id="seconds-2">0</span></div>
+            </div>
             <div class="middle-point"></div>
             <div class="second-middle-point"></div>
             <div class="hour-markers">
