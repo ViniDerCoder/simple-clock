@@ -7,6 +7,16 @@
 </head>
 <body>
     <style>
+        :root {
+            --size: 1vw
+        }
+
+        @media screen and (orientation: landscape) {
+            :root {
+                --size: 1vh
+            }
+        }
+
         body {
             margin: 0;
             display: flex;
@@ -14,19 +24,12 @@
             align-items: center;
         }
         .clock {
-            width: 100vw;
-            height: 100vw;
+            width: calc(var(--size) * 100);
+            height: calc(var(--size) * 100);
             background-color: rgb(32, 32, 32);
             border-radius: 10%;
             overflow: hidden;
-        }  
-
-        @media screen and (orientation: landscape) {
-            .clock {
-                width: 100vh;
-                height: 100vh;
-            }
-            
+            z-index: 0;
         }
 
         .clock-face {
@@ -40,78 +43,149 @@
             align-items: center;
             position: relative;
             background-color: rgb(43, 43, 43);
+            z-index: 0;
         }
 
         .middle-point {
             width: 6.5%;
             height: 6.5%;
             border-radius: 100%;
-            border: 3vw solid rgb(207, 207, 207);
+            border: calc(var(--size) * 3) solid rgb(207, 207, 207);
             position: absolute;
             z-index: 3;
             background-color: rgb(43, 43, 43);
-        }
-        
-        @media screen and (orientation: landscape) {
-            .middle-point {
-                border: 3vh solid rgb(207, 207, 207);
-            }
         }
 
         .second-middle-point {
             width: 5%;
             height: 5%;
             border-radius: 100%;
-            border: 1vw solid rgb(180, 131, 39);
+            border: var(--size) solid rgb(180, 131, 39);
             position: absolute;
             z-index: 5;
             background-color: rgb(43, 43, 43);
-        }
-        
-        @media screen and (orientation: landscape) {
-            .second-middle-point {
-                border: 1vh solid rgb(180, 131, 39);
-            }
         }
 
         .hand {
             position: absolute;
             transform-origin: 50% 100%;
+            border-radius: calc(var(--size) * 1.5);
+            transition: transform 0.5s;
         }
 
         .hour-hand {
             height: 30%;
             width: 4%;
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
             transform: translateY(-50%) rotate(90deg);
             z-index: 1;
             background-color: rgb(207, 207, 207);
         }
 
         .minute-hand {
-            height: 40%;
+            height: 45%;
             width: 3%;
-            border-radius: 20%;
             transform: translateY(-50%) rotate(180deg);
             z-index: 2;
             background-color: rgb(207, 207, 207);
         }
 
         .second-hand {
-            height: 45%;
+            height: 60%;
             width: 1%;
-            border-radius: 20%;
-            transform: translateY(-50%) rotate(-90deg);
+            transform: translateY(-30%) rotate(120deg);
             z-index: 4;
             background-color: rgb(180, 131, 39);
-            transform-origin: 50% 100%;
+            transform-origin: 50% 80%;
+        }
+
+        .hour-markers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hour-marker {
+            width: 2%;
+            height: 5%;
+            background-color: rgba(207, 207, 207, 0.658);
+            position: absolute;
+            border-radius: var(--size);
+            z-index: 1;
+        }
+
+        .hour-marker:nth-child(1) {
+            transform: rotate(30deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(2) {
+            transform: rotate(60deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(3) {
+            height: 7%;
+            transform: rotate(90deg) translateY(calc(var(--size) * -39));
+        }
+
+        .hour-marker:nth-child(4) {
+            transform: rotate(120deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(5) {
+            transform: rotate(150deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(6) {
+            height: 7%;
+            transform: rotate(180deg) translateY(calc(var(--size) * -39));
+        }
+
+        .hour-marker:nth-child(7) {
+            transform: rotate(210deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(8) {
+            transform: rotate(240deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(9) {
+            height: 7%;
+            transform: rotate(270deg) translateY(calc(var(--size) * -39));
+        }
+
+        .hour-marker:nth-child(10) {
+            transform: rotate(300deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(11) {
+            transform: rotate(330deg) translateY(calc(var(--size) * -40));
+        }
+
+        .hour-marker:nth-child(12) {
+            height: 7%;
+            transform:  rotate(0deg) translateY(calc(var(--size) * -39));
         }
     </style>
     <div class="clock">
         <div class="clock-face">
             <div class="middle-point"></div>
             <div class="second-middle-point"></div>
+            <div class="hour-markers">
+                <div class="hour-marker" id="1"></div>
+                <div class="hour-marker" id="2"></div>
+                <div class="hour-marker" id="3"></div>
+                <div class="hour-marker" id="4"></div>
+                <div class="hour-marker" id="5"></div>
+                <div class="hour-marker" id="6"></div>
+                <div class="hour-marker" id="7"></div>
+                <div class="hour-marker" id="8"></div>
+                <div class="hour-marker" id="9"></div>
+                <div class="hour-marker" id="10"></div>
+                <div class="hour-marker" id="11"></div>
+                <div class="hour-marker" id="12"></div>
+            </div>
             <div class="hand hour-hand"></div>
             <div class="hand minute-hand"></div>
             <div class="hand second-hand"></div>
