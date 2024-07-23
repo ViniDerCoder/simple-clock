@@ -78,7 +78,7 @@
             border: calc(var(--size) * 3) solid var(--hand-color);
             position: absolute;
             z-index: 5;
-            background-color: rgb(43, 43, 43);
+            background-color: var(--clock-face-color);
         }
 
         .second-middle-point {
@@ -88,7 +88,7 @@
             border: var(--size) solid var(--second-hand-color);
             position: absolute;
             z-index: 9;
-            background-color: var(--background-color);
+            background-color: var(--clock-face-color);
         }
 
         .hand {
@@ -229,6 +229,17 @@
             overflow: hidden;
             transform: translateY(0);
         }
+
+        .date {
+            position: absolute;
+            height: 10%;
+            color: var(--digital-clock-color);
+            font-size: calc(var(--size) * 4);
+            padding: 1%;
+            transform: translateY(calc(var(--size) * 25));
+            font-weight: bold;
+            font-family:Verdana, Geneva, Tahoma, sans-serif
+        }
     </style>
     <div class="clock">
         <div class="clock-face">
@@ -257,6 +268,7 @@
             <div class="hand hour-hand"></div>
             <div class="hand minute-hand"></div>
             <div class="hand second-hand"></div>
+            <div class="date"></div>
         </div>
     </div>
     <script id="colorschemes">
@@ -290,16 +302,47 @@
                     digitalClockColor: 'rgba(194, 208, 255, 0.8)',
                     digitalClockBackgroundColor: 'rgba(34, 52, 87, 0.6)'
                 }
+                case "green": return {
+                    backgroundColor: 'rgb(17, 32, 19)',
+                    clockFaceColor: 'rgb(22, 51, 25)',
+                    handColor: 'rgb(207, 207, 207)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(207, 207, 207, 0.658)',
+                    digitalClockColor: 'rgba(194, 255, 208, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(34, 87, 52, 0.6)'
+                }
+                case "red": return {
+                    backgroundColor: 'rgb(32, 17, 19)',
+                    clockFaceColor: 'rgb(51, 22, 25)',
+                    handColor: 'rgb(207, 207, 207)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(207, 207, 207, 0.658)',
+                    digitalClockColor: 'rgba(255, 194, 208, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(87, 34, 52, 0.6)'
+                }
+                case "yellow": return {
+                    backgroundColor: 'rgb(32, 32, 17)',
+                    clockFaceColor: 'rgb(51, 51, 22)',
+                    handColor: 'rgb(207, 207, 207)',
+                    secondHandColor: 'rgb(180, 131, 39)',
+                    hourMarkerColor: 'rgba(207, 207, 207, 0.658)',
+                    digitalClockColor: 'rgba(255, 255, 194, 0.8)',
+                    digitalClockBackgroundColor: 'rgba(87, 87, 34, 0.6)'
+                }
             }
         }
     </script>
     <script id="settings">
 
         const settings = {
-            smoothSeconds: true,
+            smoothSeconds: false,
             showDigital: true,
             animateDigital: true,
             digitalOnTop: true,
+            showDate: true,
+            showSecondHand: true,
+            timeOffset: 0,
+            bodyBackgroundColor: 'rgb(255, 255, 255)',
             colors: {
                 preset: undefined,
                 custom: {
@@ -327,6 +370,9 @@
         }
         if (params.showDigital) {
             settings.showDigital = params.showDigital === 'true';
+        }
+        if (params.showDate) {
+            settings.showDate = params.showDate === 'true';
         }
         if (params.animateDigital) {
             settings.animateDigital = params.animateDigital === 'true';
@@ -358,13 +404,22 @@
         if (params.customColors_digitalClockBackgroundColor) {
             settings.colors.custom.digitalClockBackgroundColor = params.customColors_digitalClockBackgroundColor;
         }
-        console.log(settings);
+        if (params.timeOffset) {
+            settings.timeOffset = parseInt(params.timeOffset);
+        }
+        if (params.bodyBackgroundColor) {
+            settings.bodyBackgroundColor = params.bodyBackgroundColor;
+        }
+        if (params.showSecondHand) {
+            settings.showSecondHand = params.showSecondHand === 'true';
+        }
 
     </script>
     <script id="main">
         const hourHand = document.querySelector('.hour-hand');
         const minuteHand = document.querySelector('.minute-hand');
         const secondHand = document.querySelector('.second-hand');
+        const date = document.querySelector('.date');
 
         const digitalClock = {
             clock: document.querySelector('.digital-clock'),
@@ -389,6 +444,14 @@
             throw new Error('One of the hands is missing');
         }
 
+        document.body.style.backgroundColor = settings.bodyBackgroundColor;
+
+        if (!settings.showSecondHand) {
+            secondHand.style.display = 'none';
+            const middlePoint = document.querySelector('.second-middle-point');
+            middlePoint.style.display = 'none';
+        }
+
         if (settings.colors.preset) {
             settings.colors.custom = { enabeld: false, ...colorShemes(settings.colors.preset) };
         }
@@ -408,7 +471,7 @@
         setInterval(() => {
 
             const now = new Date();
-            const hours = now.getHours();
+            const hours = now.getHours() + settings.timeOffset;
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
 
@@ -429,7 +492,7 @@
                 setTimeout(() => {
                     secondHand.style.transition = 'none';
                     secondHand.style.transform = `translateY(-30%) rotate(${secondsDegrees}deg)`;
-                }, settings.smoothSeconds ? 980 : 500);
+                }, settings.smoothSeconds ? 960 : 500);
             }
             if (minutesDegrees === 0) {
                 setTimeout(() => {
@@ -451,6 +514,10 @@
                 setSpanNumber(digitalClock.minutes.second, minutes % 10);
                 setSpanNumber(digitalClock.seconds.first, Math.floor(seconds / 10));
                 setSpanNumber(digitalClock.seconds.second, seconds % 10);
+            }
+
+            if(settings.showDate){
+                date.innerHTML = now.toLocaleDateString();
             }
 
         }, 1000);
