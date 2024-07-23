@@ -177,29 +177,46 @@
         }
 
         .digital-clock {
+            display: flex;
+            flex-direction: row;
             position: absolute;
             font-size: calc(var(--size) * 8.5);
             text-align: center;
-            color: rgb(207, 207, 207);
+            color: rgba(207, 207, 207, 0.8);
             z-index: 1;
             border-radius: calc(var(--size) * 1.5);
-            background-color: rgb(94, 94, 94);
+            background-color: rgba(94, 94, 94, 0.6);
+            backdrop-filter: blur(var(--size));
             width: 32%;
             height: 10%;
             padding: 1.5%;
             transform: translateY(calc(var(--size) * -18));
             font-family: 'Technology', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
-        
+
         .digital-clock > div {
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            flex: 2;
+            height: 100%;
             display: inline-block;
-            margin: 0 1%;
+            position: relative;
+        }
+
+        .digital-clock > div > span {
+            transition: transform 1s;
+            display: inline-block;
+            width: calc(var(--size) * 4);
+            text-wrap: wrap;
+            overflow: hidden;
+            transform: translateY(0);
         }
     </style>
     <div class="clock">
         <div class="clock-face">
             <div class="digital-clock">
-                <div id="hours"><span id="hours-1">0</span><span id="hours-2">0</span></div>:<div id="minutes"><span id="minutes-1">0</span><span id="minutes-2">0</span></div>:<div id="seconds"><span id="seconds-1">0</span><span id="seconds-2">0</span></div>
+                <div id="hours"><span id="hours-1">0 1 2 3 4 5 6 7 8 9</span><span id="hours-2">0 1 2 3 4 5 6 7 8 9</span></div>:<div id="minutes"><span id="minutes-1">0 1 2 3 4 5 6 7 8 9</span><span id="minutes-2">0 1 2 3 4 5 6 7 8 9</span></div>:<div id="seconds"><span id="seconds-1">0 1 2 3 4 5 6 7 8 9</span><span id="seconds-2">0 1 2 3 4 5 6 7 8 9</span></div>
             </div>
             <div class="middle-point"></div>
             <div class="second-middle-point"></div>
@@ -227,7 +244,24 @@
         const minuteHand = document.querySelector('.minute-hand');
         const secondHand = document.querySelector('.second-hand');
 
-        const digitalClock = document.querySelector('.digital-clock');
+        const digitalClock = {
+            clock: document.querySelector('.digital-clock'),
+            hours: {
+                container: document.getElementById('hours'),
+                first: document.getElementById('hours-1'),
+                second: document.getElementById('hours-2')
+            },
+            minutes: {
+                container: document.getElementById('minutes'),
+                first: document.getElementById('minutes-1'),
+                second: document.getElementById('minutes-2')
+            },
+            seconds: {
+                container: document.getElementById('seconds'),
+                first: document.getElementById('seconds-1'),
+                second: document.getElementById('seconds-2')
+            }
+        }
 
         if (!hourHand || !minuteHand || !secondHand) {
             throw new Error('One of the hands is missing');
@@ -235,11 +269,21 @@
 
         const settings = {
             smoothSeconds: true,
-            showDigital: true
+            showDigital: true,
+            animateDigital: true,
+            digitalOnTop: true
         };
 
         if (!settings.showDigital) {
-            digitalClock.style.display = 'none';
+            digitalClock.clock.style.display = 'none';
+        } else if(!settings.animateDigital) {
+            const spans = document.querySelectorAll('.digital-clock span');
+            spans.forEach(span => {
+                span.style.transition = 'none';
+            });
+        }
+        if(settings.digitalOnTop) {
+            digitalClock.clock.style.zIndex = 10;
         }
 
         setInterval(() => {
@@ -281,7 +325,20 @@
                 }, 500);
             }
 
+            if(settings.showDigital) {
+                setSpanNumber(digitalClock.hours.first, Math.floor(hours / 10));
+                setSpanNumber(digitalClock.hours.second, hours % 10);
+                setSpanNumber(digitalClock.minutes.first, Math.floor(minutes / 10));
+                setSpanNumber(digitalClock.minutes.second, minutes % 10);
+                setSpanNumber(digitalClock.seconds.first, Math.floor(seconds / 10));
+                setSpanNumber(digitalClock.seconds.second, seconds % 10);
+            }
+
         }, 1000);
+
+        function setSpanNumber(span, num) {
+            span.style.transform = `translateY(-${num * 10}%)`;
+        }
     </script>
 </body>
 
