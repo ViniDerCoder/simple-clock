@@ -50,6 +50,12 @@ You can customize the clock by adding URL parameters. Here are some examples:
 https://vinidercoder.github.io/simple-clock/?animateDigital=true&digitalOnTop=false&customColors_backgroundColor=%23ffffff&customColors_clockFaceColor=%23000000&customColors_handColor=%23ff0000&customColors_secondHandColor=%2300ff00&customColors_hourMarkerColor=%230000ff&customColors_digitalClockColor=%23ffff00&customColors_digitalClockBackgroundColor=%2300ffff
 ```
 
+## Images
+
+- Default: ![image](https://github.com/user-attachments/assets/377dd3bd-b77c-42b0-833a-0e5244dfbf78)
+- Example from above: ![image](https://github.com/user-attachments/assets/e8afd344-a409-444a-89f1-e61d5a747b76)
+
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
